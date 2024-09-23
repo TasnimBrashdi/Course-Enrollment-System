@@ -5,6 +5,8 @@
         static List<(int AID, string Aname, string email, string pas)> Admin = new List<(int AID, string Aname, string email, string pas)>();
         Dictionary<string, HashSet<string>> Enrollment_System = new Dictionary<string, HashSet<string>>();
         static List<(int SID,string SName,string Semail, string Spas)> Student = new List<(int SID, string SName, string Semail, string Spas)>();
+        static List<(int ID, string Name, string code)> Course = new List<(int ID, string Name, string code)>();
+        static string Adminf = "C:\\Users\\Codeline User\\Documents\\FILEDIS\\Admin.txt";
         static void Main(string[] args)
         {
 
@@ -23,12 +25,12 @@
                     switch (choice)
                     {
                         case "A":
-
+                            laodAdmin();
                             LoginAdmin();
                             break;
 
                         case "B":
-                           
+                            LoginStudent();
 
                             break;
                         case "C":
@@ -161,6 +163,32 @@
 
 
 
+        }
+        static void laodAdmin()
+        {
+            try
+            {
+                if (File.Exists(Adminf))
+                {
+                    using (StreamReader reader = new StreamReader(Adminf))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var parts = line.Split(" | ");
+                            if (parts.Length == 4)
+                            {
+                                Admin.Add((int.Parse(parts[0]), parts[1], parts[2], parts[3]));
+                            }
+                        }
+                    }
+                    Console.WriteLine("Admin loaded from file successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading from file: {ex.Message}");
+            }
         }
     }
     }
