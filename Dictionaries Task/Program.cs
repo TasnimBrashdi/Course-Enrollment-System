@@ -1,4 +1,6 @@
-﻿namespace Dictionaries_Task
+﻿using static System.Reflection.Metadata.BlobBuilder;
+
+namespace Dictionaries_Task
 {
     internal class Program
     {
@@ -205,7 +207,7 @@
                 switch (choice)
                 {
                     case "A":
-                       
+                        Addcouse();
 
                         break;
 
@@ -249,6 +251,21 @@
                 } 
 
             } while (ExitFlag);
+        }
+        static void Addcouse()
+        {
+            int id;
+            Console.WriteLine("Enter Number of course You want to add");
+            int NOFcourse=int.Parse(Console.ReadLine());
+            for (int i = 0; i < NOFcourse; i++) {
+             Console.WriteLine($"Insert Name of course {i+1}");
+             string namec=Console.ReadLine();
+             Console.WriteLine($"Insert Code of Course {i+1}");
+                string code=Console.ReadLine();
+                id = Course.Count > 0 ? Course.Max(c => c.ID) + 1 : 1;
+                Course.Add((id, namec, code));
+            }
+             
         }
     }
     }
