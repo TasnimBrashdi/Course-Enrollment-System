@@ -87,6 +87,7 @@
                             if (pas == pas2)
                             {
                                 Console.WriteLine("WELCOME: " + Admin[i].Aname);
+                                AdminMenu();
                                 flag = true;
 
                                 break;
@@ -189,6 +190,65 @@
             {
                 Console.WriteLine($"Error loading from file: {ex.Message}");
             }
+        }
+        static void AdminMenu()
+        {
+            bool ExitFlag = false;
+            do
+            {
+                Console.WriteLine("\n Choose: \n A- Add a new course \n B- Remove Course  \n C- Enroll a student in a course \n D-Remove a student from a course \n E-Display all students in a course" +
+                    "\n F-Display all courses and their students \n G-Find courses with common students \n H-Withdraw a Student from All Courses \n Z-Exit ");
+
+
+                string choice = Console.ReadLine()?.ToUpper();
+
+                switch (choice)
+                {
+                    case "A":
+                       
+
+                        break;
+
+                    case "B":
+                   
+
+                        break;
+                    case "C":
+
+
+                        break;
+                    case "D":
+
+
+                        break;
+                    case "E":
+
+
+                        break;
+                    case "F":
+
+
+                        break;
+                    case "G":
+
+
+                        break;
+                    case "H":
+
+
+                        break;
+                    case "Z":
+
+                        ExitFlag = true;
+
+                        break;
+
+                    default:
+                        Console.WriteLine("Sorry your choice was wrong");
+                        break;
+                } 
+
+            } while (ExitFlag);
         }
     }
     }
