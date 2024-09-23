@@ -5,10 +5,11 @@ namespace Dictionaries_Task
     internal class Program
     {
         static List<(int AID, string Aname, string email, string pas)> Admin = new List<(int AID, string Aname, string email, string pas)>();
-        Dictionary<string, HashSet<string>> Enrollment_System = new Dictionary<string, HashSet<string>>();
+        static Dictionary<string, HashSet<string>> Enrollment_System = new Dictionary<string, HashSet<string>>();
         static List<(int SID,string SName,string Semail, string Spas)> Student = new List<(int SID, string SName, string Semail, string Spas)>();
         static List<(int ID, string Name, string code)> Course = new List<(int ID, string Name, string code)>();
         static string Adminf = "C:\\Users\\Codeline User\\Documents\\FILEDIS\\Admin.txt";
+     
         static void Main(string[] args)
         {
 
@@ -262,10 +263,31 @@ namespace Dictionaries_Task
              string namec=Console.ReadLine();
              Console.WriteLine($"Insert Code of Course {i+1}");
                 string code=Console.ReadLine();
+            
                 id = Course.Count > 0 ? Course.Max(c => c.ID) + 1 : 1;
                 Course.Add((id, namec, code));
+                Enrollment_System.Add(code,new HashSet<string>());
+
             }
-             
+            Console.WriteLine("Courses added successfully");
+
+        }
+       
+        static void RemoveCourse()
+        {
+            Console.WriteLine("Enter the course code to remove");
+            string coderemove=Console.ReadLine();
+            for (int i = 0;i < Course.Count; i++)
+            {
+                for (int j = 0;j < Enrollment_System.Count; j++)
+                {
+                    if (coderemove == Course[i].code)
+                    {
+                        Enrollment_System.Remove(coderemove);
+                        Course.RemoveAt(i);
+                    }
+                }
+            }
         }
     }
     }
