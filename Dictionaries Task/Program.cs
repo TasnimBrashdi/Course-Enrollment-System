@@ -8,9 +8,9 @@ namespace Dictionaries_Task
     {
         //static List<(int AID, string Aname, string email, string pas)> Admin = new List<(int AID, string Aname, string email, string pas)>();
         static Dictionary<string, HashSet<string>> courses = new Dictionary<string, HashSet<string>>();
-        static List<(string code,string names)> WaitList = new List<(string code, string names)>();
-        
-        static Dictionary<string,int> courseCapacities = new Dictionary<string,int>();
+        static List<(string code, string names)> WaitList = new List<(string code, string names)>();
+
+        static Dictionary<string, int> courseCapacities = new Dictionary<string, int>();
         //static List<(int SID,string SName,string Semail, string Spas)> Student = new List<(int SID, string SName, string Semail, string Spas)>();
         //static List<(int ID, string Name, string code ,int Ma)> Course = new List<(int ID, string Name, string code,int Ma)>();
 
@@ -19,10 +19,10 @@ namespace Dictionaries_Task
         {
             InitializeStartupData();
             bool ExitFlag = true;
-           
+
             try
             {
-                while (ExitFlag) 
+                while (ExitFlag)
                 {
                     Console.WriteLine("\n Choose: \n A- Add a new course \n B- Remove Course  \n C- Enroll a student in a course \n D- Remove a student from a course \n E- Display all students in a course" +
                         "\n F- Display all courses and their students \n G- Find courses with common students \n H- Withdraw a Student from All Courses \n Z- Exit ");
@@ -51,7 +51,7 @@ namespace Dictionaries_Task
                             break;
                         case "E":
                             Displayallstudentincourse();
-                          
+
 
                             break;
                         case "F":
@@ -77,7 +77,7 @@ namespace Dictionaries_Task
                             break;
                     }
 
-                } 
+                }
             }
             catch (Exception ex)
             {
@@ -94,8 +94,8 @@ namespace Dictionaries_Task
         //        Console.WriteLine("Email cannot be empty.");
         //        return;
         //    }
-          
-           
+
+
         //    bool flag = false;
         //    try
         //    {
@@ -223,51 +223,53 @@ namespace Dictionaries_Task
         //}
         static void AdminMenu()
         {
-          
+
         }
         static void Addcouse()
         {
             int id;
             Console.WriteLine("Enter Number of course You want to add");
-            int NOFcourse=int.Parse(Console.ReadLine());
-            for (int i = 0; i < NOFcourse; i++) {
+            int NOFcourse = int.Parse(Console.ReadLine());
+            for (int i = 0; i < NOFcourse; i++)
+            {
                 Console.WriteLine($"Insert Code of Course {i + 1}");
                 string code = Console.ReadLine();
-                Console.WriteLine($"Insert Max number of student {i+1}");
+                Console.WriteLine($"Insert Max number of student {i + 1}");
                 int Max = int.Parse(Console.ReadLine());
-         
 
 
-                courseCapacities.Add(code,Max);
-                courses.Add(code,new HashSet<string>());
+
+                courseCapacities.Add(code, Max);
+                courses.Add(code, new HashSet<string>());
 
             }
             Console.WriteLine("Courses added successfully");
 
         }
-       
+
         static void RemoveCourse()
         {
             Console.WriteLine("Enter the course code to remove");
-            string coderemove=Console.ReadLine();
-            
-              
-                    if (courses.ContainsKey(coderemove))
-                    {
-                        courseCapacities.Remove(coderemove);
-                        courses.Remove(coderemove);
-                        Console.WriteLine("course removed");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Not found");
-                    }
-                }
-          
-        
-        static void EnrollStudent() {
+            string coderemove = Console.ReadLine();
+
+
+            if (courses.ContainsKey(coderemove))
+            {
+                courseCapacities.Remove(coderemove);
+                courses.Remove(coderemove);
+                Console.WriteLine("course removed");
+            }
+            else
+            {
+                Console.WriteLine("Not found");
+            }
+        }
+
+
+        static void EnrollStudent()
+        {
             Console.WriteLine("Enter name of student: ");
-            string  nameeroll=Console.ReadLine();
+            string nameeroll = Console.ReadLine();
             Console.WriteLine("Enter code of course: ");
             string codeeroll = Console.ReadLine();
 
@@ -292,15 +294,15 @@ namespace Dictionaries_Task
             }
             else { Console.WriteLine("Not found"); }
 
-            
+
 
 
         }
         static void RemoveStudent()
         {
-           
+
             Console.WriteLine("\n List of courses and student:");
-            foreach (KeyValuePair<string,HashSet<string>> v in courses)
+            foreach (KeyValuePair<string, HashSet<string>> v in courses)
             {
                 Console.WriteLine($"{v.Key}: {string.Join(", ", v.Value)}");
             }
@@ -308,23 +310,25 @@ namespace Dictionaries_Task
             Console.WriteLine("Enter code course");
             string code = Console.ReadLine();
             Console.WriteLine("Enter Name of student to remove");
-            string name=Console.ReadLine();
-          
+            string name = Console.ReadLine();
+
             //var student = courses[name];
             if (courses.ContainsKey(code))
             {
-               foreach(string n in courses[code])
+                foreach (string n in courses[code])
                 {
-                    if (n==name) {
+                    if (n == name)
+                    {
                         courses[code].Remove(n);
                         Console.WriteLine("student removed");
                     }
-                    
-                   
-               }
-             
+
+
+                }
+
             }
-            else {
+            else
+            {
                 Console.WriteLine("Not found");
             }
 
@@ -351,8 +355,8 @@ namespace Dictionaries_Task
         static void Displayallstudentandcourse()
         {
 
-             Console.WriteLine("\n - - - - List of courses and student - - - -");
-            foreach (KeyValuePair<string,HashSet<string>> v in courses)
+            Console.WriteLine("\n - - - - List of courses and student - - - -");
+            foreach (KeyValuePair<string, HashSet<string>> v in courses)
             {
                 Console.WriteLine($"{v.Key}: {string.Join(", ", v.Value)}");
             }
@@ -361,19 +365,19 @@ namespace Dictionaries_Task
         static void Displayallstudentincourse()
         {
 
-            Console.WriteLine("\n - - - - List of courses and student - - - -");
-            foreach (KeyValuePair<string, HashSet<string>> v in courses)
+            Console.WriteLine("\n - - - - List of courses and Capacities - - - -");
+            foreach (var v in courseCapacities)
             {
-                Console.WriteLine($"Course code: {v.Key}");
+                Console.WriteLine($"Course code: {v.Key}: {string.Join(", ", v.Value)}");
             }
             Console.WriteLine("\nEnter code course");
             string code = Console.ReadLine();
             if (courses.ContainsKey(code))
-            {   
+            {
                 foreach (string n in courses[code])
                 {
 
-                    Console.WriteLine("Student Name: "+n);
+                    Console.WriteLine("Student Name: " + n);
                 }
 
             }
@@ -382,7 +386,47 @@ namespace Dictionaries_Task
                 Console.WriteLine("Code Not found");
             }
         }
+        static void FindCoursesWithCommonStudents()
+        {
+            Console.WriteLine("\nEnter code 1 course");
+            string code1 = Console.ReadLine();
+            Console.WriteLine("\nEnter code 2  course");
+            string code2 = Console.ReadLine();
 
+
+        }
+        static void WithdrawaStudentfromAllCourses()
+        {
+            Console.WriteLine("\n List of courses and student:");
+            foreach (KeyValuePair<string, HashSet<string>> v in courses)
+            {
+                Console.WriteLine($"{v.Key}: {string.Join(", ", v.Value)}");
+            }
+
+
+            Console.WriteLine("Enter Name of student to remove");
+            string name = Console.ReadLine();
+
+
+            bool isthere = false;
+            foreach (var n in courses)
+            {
+                if (n.Value.Remove(name))
+                {
+                    isthere = true;
+                    Console.WriteLine("student removed");
+                }
+
+
+                if (!isthere)
+                {
+                    Console.WriteLine("Not found");
+                }
+
+
+            }
+
+        }
     }
-    }
+}
 
