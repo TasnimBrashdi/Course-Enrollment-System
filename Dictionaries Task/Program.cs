@@ -50,7 +50,7 @@ namespace Dictionaries_Task
                             RemoveStudent();
                             break;
                         case "E":
-
+                            Displayallstudentincourse();
 
                             break;
                         case "F":
@@ -350,6 +350,11 @@ namespace Dictionaries_Task
         static void Displayallstudentincourse()
         {
 
+             Console.WriteLine("\n - - - - List of courses and student - - - -");
+            foreach (KeyValuePair<string,HashSet<string>> v in courses)
+            {
+                Console.WriteLine($"{v.Key}: {string.Join(", ", v.Value)}");
+            }
 
         }
     }
