@@ -6,10 +6,11 @@ namespace Dictionaries_Task
     {
         static List<(int AID, string Aname, string email, string pas)> Admin = new List<(int AID, string Aname, string email, string pas)>();
         static Dictionary<string, HashSet<string>> Enrollment_System = new Dictionary<string, HashSet<string>>();
+        static List<(string code,string names)> WaitList = new List<(string code, string names)>();
         static List<(int SID,string SName,string Semail, string Spas)> Student = new List<(int SID, string SName, string Semail, string Spas)>();
-        static List<(int ID, string Name, string code)> Course = new List<(int ID, string Name, string code)>();
+        static List<(int ID, string Name, string code ,int Ma)> Course = new List<(int ID, string Name, string code,int Ma)>();
         static string Adminf = "C:\\Users\\Codeline User\\Documents\\FILEDIS\\Admin.txt";
-     
+  
         static void Main(string[] args)
         {
 
@@ -28,12 +29,13 @@ namespace Dictionaries_Task
                     switch (choice)
                     {
                         case "A":
-                            laodAdmin();
-                            LoginAdmin();
+                             AdminMenu();
+                            //laodAdmin();
+                            //LoginAdmin();
                             break;
 
                         case "B":
-                            LoginStudent();
+                            //LoginStudent();
 
                             break;
                         case "C":
@@ -213,7 +215,7 @@ namespace Dictionaries_Task
                         break;
 
                     case "B":
-                   
+                        RemoveCourse();
 
                         break;
                     case "C":
@@ -261,11 +263,13 @@ namespace Dictionaries_Task
             for (int i = 0; i < NOFcourse; i++) {
              Console.WriteLine($"Insert Name of course {i+1}");
              string namec=Console.ReadLine();
-             Console.WriteLine($"Insert Code of Course {i+1}");
-                string code=Console.ReadLine();
-            
+             Console.WriteLine($"Insert Max number of student {i+1}");
+                int Max = int.Parse(Console.ReadLine());
+                Console.WriteLine($"Insert Code of Course {i + 1}");
+                string code = Console.ReadLine();
+
                 id = Course.Count > 0 ? Course.Max(c => c.ID) + 1 : 1;
-                Course.Add((id, namec, code));
+                Course.Add((id, namec, code,Max));
                 Enrollment_System.Add(code,new HashSet<string>());
 
             }
@@ -285,9 +289,46 @@ namespace Dictionaries_Task
                     {
                         Enrollment_System.Remove(coderemove);
                         Course.RemoveAt(i);
+                        Console.WriteLine("course removed");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not found");
                     }
                 }
             }
+        }
+        static void EnrollStudent() {
+            Console.WriteLine("Enter name of student: ");
+            string  nameeroll=Console.ReadLine();
+            Console.WriteLine("Enter code of course: ");
+            string codeeroll = Console.ReadLine();
+            for (int i = 0; i < Course.Count; i++)
+            {
+                if (Enrollment_System.ContainsKey(codeeroll))
+                {
+                    var student = Enrollment_System[codeeroll];
+                    if (student.Contains(nameeroll))
+                    {
+
+                        Console.WriteLine("student is enrolled befor in course");
+                    }
+
+                    else if (Enrollment_System.Count >= Course[i].Ma)
+                    {
+                        Console.WriteLine("course Fall");
+                        WaitList.Add((nameeroll, codeeroll));
+                    }
+                    else
+                    {
+                        Enrollment_System[codeeroll].Add(nameeroll);
+                    }
+                }
+                else Console.WriteLine("Not found");
+
+            }
+
+
         }
     }
     }
