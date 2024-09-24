@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Dictionaries_Task
@@ -299,6 +300,18 @@ namespace Dictionaries_Task
         }
         static void RemoveStudent()
         {
+            Console.WriteLine("Enter Name of student to remove");
+            string name=Console.ReadLine();
+            var student = courses[name];
+            if (student.Contains(name))
+            {
+                courses.Remove(name);
+                Console.WriteLine("student removed");
+
+            }
+            else {
+                Console.WriteLine("Not found");
+            }
 
         }
         static void InitializeStartupData()
