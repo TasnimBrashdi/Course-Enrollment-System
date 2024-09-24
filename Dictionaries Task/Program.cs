@@ -59,12 +59,12 @@ namespace Dictionaries_Task
 
                             break;
                         case "G":
-
+                            FindCoursesWithCommonStudents();
 
                             break;
                         case "H":
 
-
+                            WithdrawaStudentfromAllCourses();
                             break;
                         case "Z":
 
@@ -282,7 +282,7 @@ namespace Dictionaries_Task
                     Console.WriteLine("student is enrolled befor in course");
                 }
 
-                else if (courses.Count >= courseCapacities.Count)
+                else if (student.Count >= courseCapacities[codeeroll])
                 {
                     Console.WriteLine("course Fall");
                     WaitList.Add((nameeroll, codeeroll));
@@ -290,6 +290,7 @@ namespace Dictionaries_Task
                 else
                 {
                     courses[codeeroll].Add(nameeroll);
+                    Console.WriteLine("student is enrolled");
                 }
             }
             else { Console.WriteLine("Not found"); }
@@ -392,6 +393,29 @@ namespace Dictionaries_Task
             string code1 = Console.ReadLine();
             Console.WriteLine("\nEnter code 2  course");
             string code2 = Console.ReadLine();
+            if (courses.ContainsKey(code1)&& courses.ContainsKey(code2)) {
+                HashSet<string> course1 = courses[code1];
+                HashSet<string> course2 = courses[code2];
+                HashSet<string> common = new HashSet<string>(course1);
+                common.IntersectWith(course2);
+                if (common.Count > 0)
+                {
+                    Console.WriteLine($"\nStudents who are enrolled in both courses {code1} and {code2} :\n");
+                    foreach (var name in common)
+                    {
+                        Console.WriteLine(name.ToString());
+                    }
+
+                }
+                else {
+                    Console.WriteLine("No common student");
+                
+                }
+            }
+            else
+            {
+                Console.WriteLine("code courses not found or Input invaild");
+            }
 
 
         }
