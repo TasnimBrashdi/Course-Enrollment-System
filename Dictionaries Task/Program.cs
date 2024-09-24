@@ -24,8 +24,8 @@ namespace Dictionaries_Task
             {
                 while (ExitFlag) 
                 {
-                    Console.WriteLine("\n Choose: \n A- Add a new course \n B- Remove Course  \n C- Enroll a student in a course \n D-Remove a student from a course \n E-Display all students in a course" +
-                        "\n F-Display all courses and their students \n G-Find courses with common students \n H-Withdraw a Student from All Courses \n Z-Exit ");
+                    Console.WriteLine("\n Choose: \n A- Add a new course \n B- Remove Course  \n C- Enroll a student in a course \n D- Remove a student from a course \n E- Display all students in a course" +
+                        "\n F- Display all courses and their students \n G- Find courses with common students \n H- Withdraw a Student from All Courses \n Z- Exit ");
 
 
                     string choice = Console.ReadLine()?.ToUpper();
@@ -51,10 +51,11 @@ namespace Dictionaries_Task
                             break;
                         case "E":
                             Displayallstudentincourse();
+                          
 
                             break;
                         case "F":
-
+                            Displayallstudentandcourse();
 
                             break;
                         case "G":
@@ -347,7 +348,7 @@ namespace Dictionaries_Task
             WaitList.Add(("Eva", "ENG303"));    // Eva waiting for ENG303
             Console.WriteLine("Startup data initialized.");
         }
-        static void Displayallstudentincourse()
+        static void Displayallstudentandcourse()
         {
 
              Console.WriteLine("\n - - - - List of courses and student - - - -");
@@ -357,6 +358,31 @@ namespace Dictionaries_Task
             }
 
         }
+        static void Displayallstudentincourse()
+        {
+
+            Console.WriteLine("\n - - - - List of courses and student - - - -");
+            foreach (KeyValuePair<string, HashSet<string>> v in courses)
+            {
+                Console.WriteLine($"Course code: {v.Key}");
+            }
+            Console.WriteLine("\nEnter code course");
+            string code = Console.ReadLine();
+            if (courses.ContainsKey(code))
+            {   
+                foreach (string n in courses[code])
+                {
+
+                    Console.WriteLine("Student Name: "+n);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Code Not found");
+            }
+        }
+
     }
     }
 
