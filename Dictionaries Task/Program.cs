@@ -18,11 +18,11 @@ namespace Dictionaries_Task
         static void Main(string[] args)
         {
             InitializeStartupData();
-            bool ExitFlag = false;
+            bool ExitFlag = true;
            
             try
             {
-                do
+                while (ExitFlag) 
                 {
                     Console.WriteLine("\n Choose: \n A- Add a new course \n B- Remove Course  \n C- Enroll a student in a course \n D-Remove a student from a course \n E-Display all students in a course" +
                         "\n F-Display all courses and their students \n G-Find courses with common students \n H-Withdraw a Student from All Courses \n Z-Exit ");
@@ -47,7 +47,7 @@ namespace Dictionaries_Task
                             break;
                         case "D":
 
-
+                            RemoveStudent();
                             break;
                         case "E":
 
@@ -67,7 +67,7 @@ namespace Dictionaries_Task
                             break;
                         case "Z":
 
-                            ExitFlag = true;
+                            ExitFlag = false;
 
                             break;
 
@@ -76,7 +76,7 @@ namespace Dictionaries_Task
                             break;
                     }
 
-                } while (ExitFlag);
+                } 
             }
             catch (Exception ex)
             {
@@ -230,12 +230,11 @@ namespace Dictionaries_Task
             Console.WriteLine("Enter Number of course You want to add");
             int NOFcourse=int.Parse(Console.ReadLine());
             for (int i = 0; i < NOFcourse; i++) {
-             Console.WriteLine($"Insert Name of course {i+1}");
-             string namec=Console.ReadLine();
-             Console.WriteLine($"Insert Max number of student {i+1}");
-                int Max = int.Parse(Console.ReadLine());
                 Console.WriteLine($"Insert Code of Course {i + 1}");
                 string code = Console.ReadLine();
+                Console.WriteLine($"Insert Max number of student {i+1}");
+                int Max = int.Parse(Console.ReadLine());
+         
 
 
                 courseCapacities.Add(code,Max);
@@ -250,8 +249,7 @@ namespace Dictionaries_Task
         {
             Console.WriteLine("Enter the course code to remove");
             string coderemove=Console.ReadLine();
-            for (int i = 0;i < courses.Count; i++)
-            {
+            
               
                     if (courses.ContainsKey(coderemove))
                     {
@@ -264,50 +262,66 @@ namespace Dictionaries_Task
                         Console.WriteLine("Not found");
                     }
                 }
-            }
+          
         
         static void EnrollStudent() {
             Console.WriteLine("Enter name of student: ");
             string  nameeroll=Console.ReadLine();
             Console.WriteLine("Enter code of course: ");
             string codeeroll = Console.ReadLine();
-            for (int i = 0; i < courseCapacities.Count; i++)
+
+            if (courses.ContainsKey(codeeroll))
             {
-                if (courses.ContainsKey(codeeroll))
+                var student = courses[codeeroll];
+                if (student.Contains(nameeroll))
                 {
-                    var student = courses[codeeroll];
-                    if (student.Contains(nameeroll))
-                    {
 
-                        Console.WriteLine("student is enrolled befor in course");
-                    }
-
-                    else if (courses.Count >= courseCapacities.Count)
-                    {
-                        Console.WriteLine("course Fall");
-                        WaitList.Add((nameeroll, codeeroll));
-                    }
-                    else
-                    {
-                        courses[codeeroll].Add(nameeroll);
-                    }
+                    Console.WriteLine("student is enrolled befor in course");
                 }
-                else Console.WriteLine("Not found");
 
+                else if (courses.Count >= courseCapacities.Count)
+                {
+                    Console.WriteLine("course Fall");
+                    WaitList.Add((nameeroll, codeeroll));
+                }
+                else
+                {
+                    courses[codeeroll].Add(nameeroll);
+                }
             }
+            else { Console.WriteLine("Not found"); }
+
+            
 
 
         }
         static void RemoveStudent()
         {
+           
+            Console.WriteLine("\n List of courses and student:");
+            foreach (KeyValuePair<string,HashSet<string>> v in courses)
+            {
+                Console.WriteLine($"{v.Key}: {string.Join(", ", v.Value)}");
+            }
+
+            Console.WriteLine("Enter code course");
+            string code = Console.ReadLine();
             Console.WriteLine("Enter Name of student to remove");
             string name=Console.ReadLine();
-            var student = courses[name];
-            if (student.Contains(name))
+          
+            //var student = courses[name];
+            if (courses.ContainsKey(code))
             {
-                courses.Remove(name);
-                Console.WriteLine("student removed");
-
+               foreach(string n in courses[code])
+                {
+                    if (n==name) {
+                        courses[code].Remove(n);
+                        Console.WriteLine("student removed");
+                    }
+                    
+                   
+               }
+             
             }
             else {
                 Console.WriteLine("Not found");
@@ -332,6 +346,11 @@ namespace Dictionaries_Task
             WaitList.Add(("Alice", "BIO404"));  // Alice waiting for BIO404
             WaitList.Add(("Eva", "ENG303"));    // Eva waiting for ENG303
             Console.WriteLine("Startup data initialized.");
+        }
+        static void Displayallstudentincourse()
+        {
+
+
         }
     }
     }
